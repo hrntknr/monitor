@@ -1,0 +1,37 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "webpack --config ./webpack.config.watch.js",
+    "build": "webpack --config ./webpack.config.build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "@inlet/react-pixi": "^0.5.11",
+    "babel-loader": "^8.0.6",
+    "babel-polyfill": "^6.26.0",
+    "classnames": "^2.2.6",
+    "css-loader": "^2.1.1",
+    "immutability-helper": "^3.0.0",
+    "pixi.js": "^5.0.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.0.3",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.5",
+    "redux-saga": "^1.0.2",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.2"
+  }
+}
