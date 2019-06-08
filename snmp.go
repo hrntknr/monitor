@@ -11,7 +11,7 @@ import (
 	"github.com/soniah/gosnmp"
 )
 
-type MachineStatus struct {
+type TargetStatus struct {
 	PollSuccess bool                     `json:"pollSuccess"`
 	HostName    string                   `json:"hostname"`
 	Interfaces  map[int]*InterfaceStatus `json:"interfaces"`
@@ -62,7 +62,7 @@ var (
 	ifOutErrorsOIBPrefix   = ".1.3.6.1.2.1.2.2.1.20"    //poll
 )
 
-var trafficCount = map[string]*MachineStatus{}
+var trafficCount = map[string]*TargetStatus{}
 
 func initSNMP(config *Config, eventCollector chan Event) error {
 	go startPolling(config, eventCollector)
@@ -100,7 +100,7 @@ func startTrap(config *Config, eventCollector chan Event) {
 func startPolling(config *Config, eventCollector chan Event) {
 	for {
 		go func() {
-			machines := map[string]*MachineStatus{}
+			targets := map[string]*TargetStatus{}
 			for _, target := range config.Target {
 				var community string
 				if len(target.Community) == 0 {
@@ -108,26 +108,26 @@ func startPolling(config *Config, eventCollector chan Event) {
 				} else {
 					community = target.Community
 				}
-				status, err := getMachineStatus(target, community)
+				status, err := getTargetStatus(target, community)
 				if err != nil {
-					machines[target.ID] = &MachineStatus{
+					targets[target.ID] = &TargetStatus{
 						PollSuccess: false,
 					}
 					continue
 				}
-				machines[target.ID] = status
+				targets[target.ID] = status
 			}
 			eventCollector <- Event{
-				Channel: "poll_machine",
-				Payload: machines,
+				Channel: "poll_target",
+				Payload: targets,
 			}
 		}()
 		time.Sleep(1 * time.Second)
 	}
 }
 
-func getMachineStatus(target Target, community string) (*MachineStatus, error) {
-	status := MachineStatus{
+func getTargetStatus(target Target, community string) (*TargetStatus, error) {
+	status := TargetStatus{
 		PollSuccess: true,
 	}
 	params := &gosnmp.GoSNMP{
@@ -152,7 +152,7 @@ func getMachineStatus(target Target, community string) (*MachineStatus, error) {
 	status.Interfaces = map[int]*InterfaceStatus{}
 
 	if _, ok := trafficCount[target.ID]; !ok {
-		trafficCount[target.ID] = &MachineStatus{
+		trafficCount[target.ID] = &TargetStatus{
 			Interfaces: map[int]*InterfaceStatus{},
 		}
 	}

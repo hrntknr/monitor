@@ -11,7 +11,7 @@ export default handleActions({
     console.log(action.payload);
     const {channel, payload} = action.payload;
     switch (channel) {
-    case 'poll_machine': {
+    case 'poll_target': {
       return {
         ...state,
         networkState: payload,

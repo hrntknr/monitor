@@ -37,6 +37,7 @@ func listenAPI(eventCollector chan Event) {
 	r.StaticFile("/build.js", "./static/build.js")
 
 	r.GET("/topology", func(c *gin.Context) {
+		// c.JSON(http.StatusOK)
 	})
 
 	r.GET("/ws", func(c *gin.Context) {
