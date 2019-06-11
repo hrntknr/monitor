@@ -101,7 +101,7 @@ func startPolling(config *Config, eventCollector chan Event) {
 	for {
 		go func() {
 			targets := map[string]*TargetStatus{}
-			for _, target := range config.Target {
+			for _, target := range config.Targets {
 				var community string
 				if len(target.Community) == 0 {
 					community = config.Community

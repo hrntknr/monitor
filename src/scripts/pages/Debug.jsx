@@ -5,6 +5,7 @@ class Debug extends React.Component {
   render() {
     return (
       <div>
+        <p>{JSON.stringify(this.props.topology)}</p>
         {Object.keys(this.props.networkState).map((id)=>{
           if (this.props.networkState[id].pollSuccess) {
             return (

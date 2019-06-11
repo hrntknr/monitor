@@ -2,6 +2,7 @@ import React from 'react';
 import {Router, Switch, Route} from 'react-router-dom';
 import container from './container';
 import {createBrowserHistory} from 'history';
+import Index from './pages/Index.jsx';
 import Debug from './pages/Debug.jsx';
 
 class Main extends React.Component {
@@ -14,6 +15,7 @@ class Main extends React.Component {
     return (
       <Router history={this.history}>
         <Switch>
+          <Route path='/' component={Index} exact />
           <Route path='/debug' component={Debug} exact />
         </Switch>
       </Router>

@@ -1,20 +1,20 @@
 community = "public"
 
-[[target]]
+[[targets]]
 x = 100
 y = 200
 id = "x510-1"
 ip = "10.0.0.41"
 port = 161
 
-[[target]]
+[[targets]]
 x = 100
 y = 100
 id = "gw"
 ip = "10.0.0.1"
 port = 161
 
-[[connection]]
+[[connections]]
 from = "gw"
 fromIf = "GigabitEthernet7"
 to = "x510-1"

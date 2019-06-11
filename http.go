@@ -15,7 +15,7 @@ var wsupgrader = websocket.Upgrader{
 
 var wsListeners = []chan Event{}
 
-func initAPI(eventCollector chan Event) error {
+func initAPI(config *Config, eventCollector chan Event) error {
 	go func() {
 		for {
 			event := <-eventCollector
@@ -24,11 +24,11 @@ func initAPI(eventCollector chan Event) error {
 			}
 		}
 	}()
-	go listenAPI(eventCollector)
+	go listenAPI(config, eventCollector)
 	return nil
 }
 
-func listenAPI(eventCollector chan Event) {
+func listenAPI(config *Config, eventCollector chan Event) {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
@@ -37,7 +37,7 @@ func listenAPI(eventCollector chan Event) {
 	r.StaticFile("/build.js", "./static/build.js")
 
 	r.GET("/topology", func(c *gin.Context) {
-		// c.JSON(http.StatusOK)
+		c.JSON(http.StatusOK, config.generateTopology())
 	})
 
 	r.GET("/ws", func(c *gin.Context) {

@@ -4,11 +4,14 @@ import update from 'immutability-helper';
 
 const initialState = {
   networkState: {},
+  topology: {
+    targets: {},
+    connections: [],
+  },
 };
 
 export default handleActions({
   [types.ADD_EVENT_MESSAGE]: (state, action)=>{
-    console.log(action.payload);
     const {channel, payload} = action.payload;
     switch (channel) {
     case 'poll_target': {
@@ -29,5 +32,11 @@ export default handleActions({
       return state;
     }
     }
+  },
+  [types.UPDATE_TOPOLOGY]: (state, action)=>{
+    return {
+      ...state,
+      topology: action.payload,
+    };
   },
 }, initialState);
