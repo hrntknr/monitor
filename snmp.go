@@ -81,8 +81,12 @@ func startTrap(config *Config, eventCollector chan Event) {
 					continue
 					//TODO: error log
 				}
+				target := config.lookupFromIP(addr.IP.String())
+				if target == nil {
+					continue
+				}
 				eventCollector <- Event{"trap_interface_state", InterfaceStatusUpdate{
-					ID:         config.lookupFromIP(addr.IP.String()).ID,
+					ID:         target.ID,
 					IfIndex:    ifIndex,
 					OperStatus: v.Value.(int),
 				}}
